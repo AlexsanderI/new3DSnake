@@ -1,0 +1,50 @@
+{
+  "name": "snake3d",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "verify": "npm run typecheck && npm run lint && npm run test:unit && npm run build",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "test:e2e": "npx playwright test"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.121.5",
+    "@react-three/fiber": "^8.17.10",
+    "@types/three": "^0.173.0",
+    "leva": "^0.10.0",
+    "r3f-perf": "^7.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.3.1",
+    "three": "^0.173.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.44.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^10.7.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.64.0",
+    "vite": "^5.4.11",
+    "vitest": "^4.1.10"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "printWidth": 90,
+    "jsxSingleQuote": true
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "repository-quality-gates",
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Pin runtime expectations and artifact hygiene",
+      "layer": "docs",
+      "deps": [],
+      "acs": ["AC-05"],
+      "dod": "Runtime and generated artifact rules are explicit and consistent across package metadata, README, and ignore rules.",
+      "files_hint": ["package.json", ".nvmrc", ".gitignore", "README.md"]
+    },
+    {
+      "id": "T2",
+      "title": "Extract an explicit TypeScript typecheck gate",
+      "layer": "app",
+      "deps": [],
+      "acs": ["AC-01", "AC-02"],
+      "dod": "`npm run typecheck` performs strict TypeScript checking without emitting files, and build still checks types before bundling.",
+      "files_hint": ["package.json", "tsconfig.json", "tsconfig.node.json"]
+    },
+    {
+      "id": "T3",
+      "title": "Add a focused ESLint gate",
+      "layer": "app",
+      "deps": [],
+      "acs": ["AC-01", "AC-02"],
+      "dod": "`npm run lint` checks the configured source and test files with committed ESLint configuration and actionable failures.",
+      "files_hint": ["package.json", "package-lock.json", "eslint.config.js", "src", "tests"]
+    },
+    {
+      "id": "T4",
+      "title": "Add the Vitest deterministic test runner",
+      "layer": "tests",
+      "deps": [],
+      "acs": ["AC-06"],
+      "dod": "`npm run test:unit` can execute TypeScript unit tests without launching the browser game or React Three Fiber.",
+      "files_hint": ["package.json", "package-lock.json", "vite.config.ts", "vitest.config.ts", "tests/unit"]
+    },
+    {
+      "id": "T5",
+      "title": "Seed focused deterministic coverage",
+      "layer": "tests",
+      "deps": ["T4"],
+      "acs": ["AC-06"],
+      "dod": "At least one isolated utility or game-rule test passes through `npm run test:unit` and can guide future focused tests.",
+      "files_hint": ["tests/unit", "src/commands/mulberry32.ts", "src/engine/time/timeFormat.ts", "src/engine/field/fieldSizeValidation.ts"]
+    },
+    {
+      "id": "T6",
+      "title": "Compose the aggregate deterministic verify command",
+      "layer": "wiring",
+      "deps": ["T2", "T3", "T5"],
+      "acs": ["AC-01", "AC-02", "AC-04", "AC-06"],
+      "dod": "`npm run verify` runs typecheck, lint, unit tests, and build in a clear deterministic order while leaving `test:e2e` available.",
+      "files_hint": ["package.json", "README.md"]
+    },
+    {
+      "id": "T7",
+      "title": "Add pull-request verification workflow",
+      "layer": "worker",
+      "deps": ["T6"],
+      "acs": ["AC-03", "AC-07"],
+      "dod": "Pull requests run `npm ci` and `npm run verify` through a committed GitHub Actions workflow with visible pass/fail status.",
+      "files_hint": [".github/workflows/quality-gates.yml", "package.json"]
+    },
+    {
+      "id": "T8",
+      "title": "Document setup, gate order, and completion rules",
+      "layer": "docs",
+      "deps": ["T1", "T6", "T7"],
+      "acs": ["AC-01", "AC-02", "AC-03", "AC-04", "AC-05", "AC-06", "AC-07"],
+      "dod": "Contributor docs agree on setup, gate purpose, failure ownership, PR verification, and Playwright completion coverage.",
+      "files_hint": ["README.md", "AGENTS.md", "docs/roadmap.md", "docs/features/repository-quality-gates/spec.md"]
+    }
+  ]
+}

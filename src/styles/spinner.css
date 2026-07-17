@@ -1,0 +1,13 @@
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #b8c6dc;
+  font-size: 2vmin;
+}
+
+.spinner-container i {
+  font-size: 4vmin;
+  margin-bottom: 0.5rem;
+}

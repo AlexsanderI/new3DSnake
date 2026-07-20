@@ -165,7 +165,9 @@ function Main() {
             <Scene />
           </Canvas>
 
-          {(isVisible || lifecycleState === 'game-over') && (
+          {(isVisible ||
+            lifecycleState === 'game-over' ||
+            lifecycleState === 'victory') && (
             <Suspense fallback={<LoadingFallback text='Loading menu...' />}>
               <Menu />
             </Suspense>

@@ -13,7 +13,7 @@
 | T6 | Coordinate session reset and session commands | app | Codex | L | T2, T3, T4, T5 | FR-01, FR-07, FR-08, FR-10, FR-11, FR-14 | AC-01, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-20 | done |
 | T7 | Integrate lifecycle with React, R3F, input, and pause | wiring | Codex | M | T5, T6 | FR-02, FR-12, FR-13 | AC-02, AC-03, AC-07, AC-17, AC-23 | done |
 | T8 | Deliver Game Over result slice | ui | Codex | M | T2, T6, T7 | FR-03, FR-04, FR-06, FR-11, FR-12 | AC-04, AC-05, AC-06, AC-07, AC-10, AC-15, AC-18, AC-19, AC-21 | done |
-| T9 | Deliver Victory result slice | ui | Codex | M | T2, T6, T7 | FR-05, FR-06, FR-11 | AC-08, AC-09, AC-11, AC-16, AC-18, AC-19, AC-21 | todo |
+| T9 | Deliver Victory result slice | ui | Codex | M | T2, T6, T7 | FR-05, FR-06, FR-11 | AC-08, AC-09, AC-11, AC-16, AC-18, AC-19, AC-21 | done |
 | T10 | Wire result actions and accessible lifecycle UI | ui | Codex | M | T8, T9 | FR-07, FR-08, FR-10, FR-12, FR-13 | AC-03, AC-07, AC-10, AC-11, AC-15, AC-16, AC-17, AC-20 | todo |
 | T11 | Add browser lifecycle verification | tests | Codex | L | T10 | FR-02, FR-03, FR-04, FR-05, FR-06, FR-07, FR-08, FR-09, FR-10, FR-11, FR-12, FR-13, FR-14 | AC-02, AC-03, AC-04, AC-05, AC-06, AC-07, AC-08, AC-09, AC-10, AC-11, AC-14, AC-15, AC-16, AC-17, AC-20, AC-22, AC-23, AC-24 | todo |
 | T12 | Finalize documentation and traceability | docs | Codex | S | T11 | FR-01 through FR-14 | AC-22, AC-25 | todo |

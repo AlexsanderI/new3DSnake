@@ -1,0 +1,114 @@
+{
+  "slug": "commercial-game-loop",
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Add lifecycle controller foundation",
+      "layer": "app",
+      "deps": [],
+      "acs": ["AC-01", "AC-02", "AC-03", "AC-07", "AC-17"],
+      "dod": "Lifecycle states, transition rules, invalid-command no-ops, and subscription/read APIs are covered by deterministic unit tests without moving gameplay facts into the controller.",
+      "files_hint": ["src/engine/session", "src/store", "tests/unit/session"]
+    },
+    {
+      "id": "T2",
+      "title": "Add best-score service and terminal snapshots",
+      "layer": "app",
+      "deps": ["T1"],
+      "acs": ["AC-04", "AC-05", "AC-06", "AC-08", "AC-18", "AC-19", "AC-20", "AC-21"],
+      "dod": "Validated localStorage best-score behavior, failure-reason mapping, and Game Over/Victory snapshot creation pass deterministic tests including storage failure cases.",
+      "files_hint": ["src/engine/session", "src/engine/scores", "src/engine/levels", "tests/unit/session"]
+    },
+    {
+      "id": "T3",
+      "title": "Add core session reset APIs",
+      "layer": "domain",
+      "deps": ["T1"],
+      "acs": ["AC-01", "AC-06", "AC-12", "AC-13", "AC-14"],
+      "dod": "Score, protocol, current level, lives, timer, pause, mistake, and input reset APIs are exact, idempotent, and tested, with zero-lives semantics preserving level JSON values.",
+      "files_hint": ["src/engine/scores", "src/engine/protocol", "src/engine/levels", "src/engine/lives", "src/engine/time", "src/engine/events", "tests/unit/engine"]
+    },
+    {
+      "id": "T4",
+      "title": "Add world-state reset APIs",
+      "layer": "domain",
+      "deps": ["T1"],
+      "acs": ["AC-01", "AC-12", "AC-13", "AC-14", "AC-24"],
+      "dod": "Snake, food, bonuses, active bonus effects, obstacle engine history, obstacle visual state, animation counters, and transient render state expose exact idempotent resets covered by unit tests.",
+      "files_hint": ["src/engine/snake", "src/engine/food", "src/engine/bonuses", "src/engine/obstacles", "src/animations", "src/components/Obstacles.tsx", "src/engine/render", "tests/unit/engine", "tests/unit/animations"]
+    },
+    {
+      "id": "T5",
+      "title": "Add session temporary-effect cleanup",
+      "layer": "app",
+      "deps": ["T1"],
+      "acs": ["AC-13", "AC-14", "AC-23", "AC-24"],
+      "dod": "Life-lost timers, session-owned temporary handles, stale-session guards, and component timeout cleanup are deterministic and covered with fake-timer tests where appropriate.",
+      "files_hint": ["src/engine/session", "src/engine/protocol/lifeLost.ts", "src/components/Game.tsx", "tests/unit/session", "tests/unit/engine"]
+    },
+    {
+      "id": "T6",
+      "title": "Coordinate session reset and session commands",
+      "layer": "app",
+      "deps": ["T2", "T3", "T4", "T5"],
+      "acs": ["AC-01", "AC-10", "AC-11", "AC-12", "AC-13", "AC-14", "AC-15", "AC-16", "AC-17", "AC-20"],
+      "dod": "Start, Play Again, Main Menu, full reset orchestration, best-score preservation, and 10 consecutive deterministic Play Again cycles pass integration tests.",
+      "files_hint": ["src/engine/session", "src/engine/events/setInitialLevelOfGame.ts", "tests/unit/session", "tests/integration"]
+    },
+    {
+      "id": "T7",
+      "title": "Integrate lifecycle with React, R3F, input, and pause",
+      "layer": "wiring",
+      "deps": ["T5", "T6"],
+      "acs": ["AC-02", "AC-03", "AC-07", "AC-17", "AC-23"],
+      "dod": "Frame advancement, input listener selection, pause/resume, terminal input ignoring, and StrictMode-safe listener cleanup are wired to lifecycle and tested.",
+      "files_hint": ["src/components/Game.tsx", "src/engine/time/setLoop.ts", "src/engine/events/keyboardEvents.ts", "src/engine/events/pauseEvent.ts", "src/store", "tests/unit/session"]
+    },
+    {
+      "id": "T8",
+      "title": "Deliver Game Over result slice",
+      "layer": "ui",
+      "deps": ["T2", "T6", "T7"],
+      "acs": ["AC-04", "AC-05", "AC-06", "AC-07", "AC-10", "AC-15", "AC-18", "AC-19", "AC-21"],
+      "dod": "All supported Game Over reasons report to the controller, capture a snapshot before reset, render required result content, ignore terminal input, and no longer reload.",
+      "files_hint": ["src/engine/events/gameOverEvent.ts", "src/engine/events/keyboardEvents.ts", "src/engine/protocol/gameOver.ts", "src/components/Menu.tsx", "src/components", "src/styles", "tests/unit/session"]
+    },
+    {
+      "id": "T9",
+      "title": "Deliver Victory result slice",
+      "layer": "ui",
+      "deps": ["T2", "T6", "T7"],
+      "acs": ["AC-08", "AC-09", "AC-11", "AC-16", "AC-18", "AC-19", "AC-21"],
+      "dod": "Final-level completion reports Victory to the controller, captures a snapshot, keeps the required result visible, and removes the automatic final-win reload.",
+      "files_hint": ["src/engine/protocol/levelComplete.tsx", "src/engine/events/levelCompleteEvent.ts", "src/components/Menu.tsx", "src/components", "src/styles", "tests/unit/session"]
+    },
+    {
+      "id": "T10",
+      "title": "Wire result actions and accessible lifecycle UI",
+      "layer": "ui",
+      "deps": ["T8", "T9"],
+      "acs": ["AC-03", "AC-07", "AC-10", "AC-11", "AC-15", "AC-16", "AC-17", "AC-20"],
+      "dod": "Play Again and Main Menu actions are keyboard and pointer accessible from both terminal screens, preserve best score, and leave non-active states guarded from movement and pause input.",
+      "files_hint": ["src/components/Menu.tsx", "src/components", "src/styles/menu.css", "src/store", "tests/unit/session"]
+    },
+    {
+      "id": "T11",
+      "title": "Add browser lifecycle verification",
+      "layer": "tests",
+      "deps": ["T10"],
+      "acs": ["AC-02", "AC-03", "AC-04", "AC-05", "AC-06", "AC-07", "AC-08", "AC-09", "AC-10", "AC-11", "AC-14", "AC-15", "AC-16", "AC-17", "AC-20", "AC-22", "AC-23", "AC-24"],
+      "dod": "Playwright scenarios verify representative lifecycle paths, no reload, result-screen stability, terminal input ignoring, best score across refresh, Play Again, Main Menu, and Victory.",
+      "files_hint": ["tests/e2e", "playwright.config.ts"]
+    },
+    {
+      "id": "T12",
+      "title": "Finalize documentation and traceability",
+      "layer": "docs",
+      "deps": ["T11"],
+      "acs": ["AC-22", "AC-25"],
+      "dod": "Feature docs and review notes identify completed verification, trace FR/AC coverage, record remaining risks, and confirm no lifecycle implementation evidence is missing.",
+      "files_hint": ["docs/features/commercial-game-loop", "README.md", "docs/roadmap.md"]
+    }
+  ]
+}
+

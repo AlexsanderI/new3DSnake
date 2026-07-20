@@ -61,3 +61,7 @@ export const updateSnakeBodyLocation = () => {
 export const getSnakeBodyLocation = (): number[][] => {
   return snakeBodyLocation
 }
+
+export const resetSnakeBodyLocation = (): void => {
+  snakeBodyLocation = []
+}

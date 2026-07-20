@@ -32,11 +32,48 @@ export const setCounterUnits = () => {
 
 export const getCounterUnits = () => counterUnits
 
+export const setCounterUnitsExact = (units: number[][]): void => {
+  counterUnits = units.map((unit) => [...unit])
+}
+
+export const resetCounterUnits = (): void => {
+  counterUnits = []
+}
+
 // function easeOutCubic(t: number) {
 //   return 1 - Math.pow(1 - t, 3)
 // }
 
 let moveSpeed = 1
+
+export const setSnakeBodyMovementState = ({
+  moveSpeed: nextMoveSpeed,
+  waveTime: nextWaveTime,
+  eatingTime: nextEatingTime,
+}: {
+  moveSpeed: number
+  waveTime: number
+  eatingTime: number
+}): void => {
+  moveSpeed = nextMoveSpeed
+  waveTime = nextWaveTime
+  eatingTime = nextEatingTime
+}
+
+export const getSnakeBodyMovementState = () => ({
+  moveSpeed,
+  waveTime,
+  eatingTime,
+})
+
+export const resetSnakeBodyMovingState = (): void => {
+  resetCounterUnits()
+  setSnakeBodyMovementState({
+    moveSpeed: 1,
+    waveTime: 0,
+    eatingTime: 0,
+  })
+}
 export const snakeBodyMoving = (steps: SnakeSteps[], delta: number) => {
   const [counterHeadX, counterHeadY] = getCounterHead()
   if (counterHeadX === 0 && counterHeadY === 0) {

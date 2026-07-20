@@ -44,6 +44,11 @@ export function setObstaclesXCoord(obstacles: number[][]): void {
 export function setObstaclesStepX(steps: number[]): void {
   obstaclesStepX = [...steps]
 }
+export function resetObstaclesX(): void {
+  obstaclesX = []
+  obstaclesXCoord = []
+  obstaclesStepX = []
+}
 /**
  * Возвращает массив строк 'x' для препятствий, движущихся по горизонтали
  */

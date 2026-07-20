@@ -21,6 +21,9 @@ export function renderComplete(): void {
 export function renderNotComplete(): void {
   isRender = false;
 }
+export function resetRender(): void {
+  isRender = false;
+}
 /**
  * Возвращает значение isRender
  * @returns isRender

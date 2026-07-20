@@ -7,3 +7,7 @@ export function changeSnakeSpeed(newSpeed: number) {
 export function getSnakeSpeed() {
   return snakeSpeed
 }
+
+export function resetSnakeSpeed(): void {
+  snakeSpeed = 1
+}

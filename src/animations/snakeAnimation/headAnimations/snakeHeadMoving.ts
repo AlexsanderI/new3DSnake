@@ -9,6 +9,10 @@ import { MathUtils } from 'three'
 
 let moveSpeed = 1
 
+export const resetSnakeHeadMovingState = (): void => {
+  moveSpeed = 1
+}
+
 export const snakeHeadMoving = (steps: SnakeSteps, delta: number) => {
   const { currentStepX, currentStepY } = steps
   const currentStepZ = getHeadVerticalStep()

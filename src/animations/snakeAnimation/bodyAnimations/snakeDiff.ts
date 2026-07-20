@@ -36,3 +36,8 @@ export function getDiff(): SnakeDiffLocation[] {
 export function getPreviousDiff(): SnakeDiffLocation[] {
   return snakePreviousDiff
 }
+
+export function resetSnakeDiff(): void {
+  snakeDiff = []
+  snakePreviousDiff = []
+}

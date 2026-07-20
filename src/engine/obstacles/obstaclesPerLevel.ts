@@ -4,9 +4,9 @@
  *    @function setObstacles Задает общий массив строк и массивы каждого типа
  *    @function getObstacles Возвращает общий массив строк
  */
-import { setObstaclesX } from "./obstaclesX";
-import { setObstaclesY } from "./obstaclesY";
-import { setObstaclesFix } from "./obstaclesFix";
+import { resetObstaclesX, setObstaclesX } from "./obstaclesX";
+import { resetObstaclesY, setObstaclesY } from "./obstaclesY";
+import { resetObstaclesFix, setObstaclesFix } from "./obstaclesFix";
 /**
  * @var массив движения: 'y'- вертикально, 'x'-горизонтально, 'fix'-неподвижно
  */
@@ -20,6 +20,12 @@ export function setObstacles(obstacles: string[]): void {
   setObstaclesX();
   setObstaclesY();
   setObstaclesFix();
+}
+export function resetObstaclesPerLevel(): void {
+  obstaclesPerLevel = [];
+  resetObstaclesX();
+  resetObstaclesY();
+  resetObstaclesFix();
 }
 /**
  * Возвращает массив ключевых слов для каждого препятствия

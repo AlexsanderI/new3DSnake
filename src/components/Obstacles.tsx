@@ -11,14 +11,7 @@ import { checkTimerWorking } from '../engine/time/isTimer'
 import moveObstacles from '../engine/obstacles/moveObstacles'
 import Rock from '../assets/rockModel/Rock'
 import { checkMistake } from '../engine/lives/isMistake'
-
-let threeCoordX: THREE.Vector3[] = []
-let threeCoordY: THREE.Vector3[] = []
-let counter = -1
-let prevVisualX: number[] = []
-let prevVisualY: number[] = []
-let nextEngineX: number[] = []
-let nextEngineY: number[] = []
+import { obstacleVisualState } from './obstacleVisualState'
 
 const Obstacles: React.FC = () => {
   const gridSize = getField()
@@ -58,21 +51,25 @@ const Obstacles: React.FC = () => {
     const shouldAnimateObstacles = checkTimerWorking() || checkMistake()
     const forceMoveByMistake = !checkTimerWorking() && checkMistake()
     // 1. Тик: запускаем движок на границе периода (до инициализации, чтобы в первом кадре не срабатывало)
-    if (counter === 0 && shouldAnimateObstacles) {
+    if (obstacleVisualState.counter === 0 && shouldAnimateObstacles) {
       // Сохраняем текущие экранные позиции как начало интерполяции
-      threeCoordX.forEach((v, i) => {
-        prevVisualX[i] = v.x
+      obstacleVisualState.threeCoordX.forEach((v, i) => {
+        obstacleVisualState.prevVisualX[i] = v.x
       })
-      threeCoordY.forEach((v, i) => {
-        prevVisualY[i] = v.y
+      obstacleVisualState.threeCoordY.forEach((v, i) => {
+        obstacleVisualState.prevVisualY[i] = v.y
       })
       // Шаг движка
       moveObstacles('x', forceMoveByMistake)
       moveObstacles('y', forceMoveByMistake)
       // Читаем новые целевые позиции движка
       const updated = getAllObstacles()
-      nextEngineX = updated.xCoord.map((c) => Math.round(c[0] - gridSize / 2) - 1)
-      nextEngineY = updated.yCoord.map((c) => Math.round(c[1] - gridSize / 2) - 1)
+      obstacleVisualState.nextEngineX = updated.xCoord.map(
+        (c) => Math.round(c[0] - gridSize / 2) - 1
+      )
+      obstacleVisualState.nextEngineY = updated.yCoord.map(
+        (c) => Math.round(c[1] - gridSize / 2) - 1
+      )
       // Обновляем направление ежей, сохраняя последнее ненулевое
       const newXSteps = updated.xStep.map((s, i) => {
         if (s !== 0) {
@@ -93,8 +90,8 @@ const Obstacles: React.FC = () => {
     }
 
     // 2. Инициализация на первом кадре
-    if (counter === -1) {
-      threeCoordX = xCoord.map(
+    if (obstacleVisualState.counter === -1) {
+      obstacleVisualState.threeCoordX = xCoord.map(
         (coord) =>
           new THREE.Vector3(
             Math.round(coord[0] - gridSize / 2) - 1,
@@ -102,7 +99,7 @@ const Obstacles: React.FC = () => {
             0,
           ),
       )
-      threeCoordY = yCoord.map(
+      obstacleVisualState.threeCoordY = yCoord.map(
         (coord) =>
           new THREE.Vector3(
             Math.round(coord[0] - gridSize / 2) - 1,
@@ -110,28 +107,41 @@ const Obstacles: React.FC = () => {
             0,
           ),
       )
-      prevVisualX = threeCoordX.map((v) => v.x)
-      prevVisualY = threeCoordY.map((v) => v.y)
-      nextEngineX = [...prevVisualX]
-      nextEngineY = [...prevVisualY]
-      counter = 0
+      obstacleVisualState.prevVisualX = obstacleVisualState.threeCoordX.map((v) => v.x)
+      obstacleVisualState.prevVisualY = obstacleVisualState.threeCoordY.map((v) => v.y)
+      obstacleVisualState.nextEngineX = [...obstacleVisualState.prevVisualX]
+      obstacleVisualState.nextEngineY = [...obstacleVisualState.prevVisualY]
+      obstacleVisualState.counter = 0
     }
 
     // 3. Продвигаем счётчик
-    counter += 1 / SystemConfig.FPS
-    const tickProgress = counter // захватываем до сброса
-    if (shouldAnimateObstacles && counter >= 1) counter = 0
+    obstacleVisualState.counter += 1 / SystemConfig.FPS
+    const tickProgress = obstacleVisualState.counter // захватываем до сброса
+    if (shouldAnimateObstacles && obstacleVisualState.counter >= 1)
+      obstacleVisualState.counter = 0
 
     // 4. Плавная интерполяция prevVisual → nextEngine
-    if (threeCoordX.length > 0) {
+    if (obstacleVisualState.threeCoordX.length > 0) {
       const t = Math.min(tickProgress, 1)
-      threeCoordX.forEach((vec, i) => {
-        if (prevVisualX[i] !== undefined && nextEngineX[i] !== undefined)
-          vec.x = prevVisualX[i] + (nextEngineX[i] - prevVisualX[i]) * t
+      obstacleVisualState.threeCoordX.forEach((vec, i) => {
+        if (
+          obstacleVisualState.prevVisualX[i] !== undefined &&
+          obstacleVisualState.nextEngineX[i] !== undefined
+        )
+          vec.x =
+            obstacleVisualState.prevVisualX[i] +
+            (obstacleVisualState.nextEngineX[i] - obstacleVisualState.prevVisualX[i]) *
+              t
       })
-      threeCoordY.forEach((vec, i) => {
-        if (prevVisualY[i] !== undefined && nextEngineY[i] !== undefined)
-          vec.y = prevVisualY[i] + (nextEngineY[i] - prevVisualY[i]) * t
+      obstacleVisualState.threeCoordY.forEach((vec, i) => {
+        if (
+          obstacleVisualState.prevVisualY[i] !== undefined &&
+          obstacleVisualState.nextEngineY[i] !== undefined
+        )
+          vec.y =
+            obstacleVisualState.prevVisualY[i] +
+            (obstacleVisualState.nextEngineY[i] - obstacleVisualState.prevVisualY[i]) *
+              t
       })
     }
 
@@ -140,7 +150,10 @@ const Obstacles: React.FC = () => {
       const [obsType, indexStr] = key.split('_')
       const index = parseInt(indexStr, 10)
       if (obsType === 'fix') return
-      const vec = obsType === 'x' ? threeCoordX[index] : threeCoordY[index]
+      const vec =
+        obsType === 'x'
+          ? obstacleVisualState.threeCoordX[index]
+          : obstacleVisualState.threeCoordY[index]
       if (!vec) return
       ref.current?.position.set(vec.x, vec.y, 0)
     })

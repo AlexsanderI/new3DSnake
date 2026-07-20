@@ -31,3 +31,9 @@ export const getSnakeUnitRotation = (): number[][] => {
 export const getSnakeUnitScale = (): number[][] => {
   return snakeBodyScale
 }
+
+export const resetSnakeBodyProps = (): void => {
+  snakeBodyPosition.length = 0
+  snakeBodyRotation.length = 0
+  snakeBodyScale.length = 0
+}

@@ -55,4 +55,41 @@ function renderInfo(): void {
   }
 }
 
+type ResettableHudElement = {
+  innerHTML: string
+  style?: {
+    opacity?: string
+    display?: string
+  }
+}
+
+type ResettableHudElements = Partial<{
+  bonusElement: ResettableHudElement | null
+  speedElement: ResettableHudElement | null
+  lifeElement: ResettableHudElement | null
+  scoreElement: ResettableHudElement | null
+  leftToEatElement: ResettableHudElement | null
+  timeElement: ResettableHudElement | null
+  levelElement: ResettableHudElement | null
+}>
+
+const resetElement = (element: ResettableHudElement | null | undefined): void => {
+  if (!element) return
+  element.innerHTML = ''
+  if (element.style) {
+    element.style.opacity = ''
+    element.style.display = ''
+  }
+}
+
+export function resetRenderInfo(elements: ResettableHudElements = getSelectors()): void {
+  resetElement(elements.bonusElement)
+  resetElement(elements.speedElement)
+  resetElement(elements.lifeElement)
+  resetElement(elements.scoreElement)
+  resetElement(elements.leftToEatElement)
+  resetElement(elements.timeElement)
+  resetElement(elements.levelElement)
+}
+
 export default renderInfo

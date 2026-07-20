@@ -29,6 +29,10 @@ export function setObstaclesFix(): void {
 export function setObstaclesFixCoord(obstacles: number[][]): void {
   obstaclesFixCoord = [...obstacles]
 }
+export function resetObstaclesFix(): void {
+  obstaclesFix = []
+  obstaclesFixCoord = []
+}
 /**
  * Возвращает массив ключевых слов 'fix' для препятствий, которые не движутся
  */

@@ -30,6 +30,10 @@ export const setSnakeTurnAround = (turn: number[]) => {
 
 export const getSnakeTurnAround = () => snakeTurnAround
 
+export const resetSnakeTurnAround = (): void => {
+  setSnakeTurnAround([0, 0])
+}
+
 /**
  * Задает направление движения головы змейки при рендере по данным движка.
  * @param step Текущее и предыдущее направления движения головы змейки

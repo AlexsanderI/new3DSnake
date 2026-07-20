@@ -157,3 +157,30 @@ export const getCounterHead = (): number[] => {
 export const getHeadVerticalStep = (): number => {
   return headVerticalStep
 }
+
+export const setSnakeHeadLocationState = ({
+  counterHeadX: nextCounterHeadX,
+  counterHeadY: nextCounterHeadY,
+  moveSpeed: nextMoveSpeed,
+  headVerticalStep: nextHeadVerticalStep,
+}: {
+  counterHeadX: number
+  counterHeadY: number
+  moveSpeed: number
+  headVerticalStep: number
+}): void => {
+  counterHeadX = nextCounterHeadX
+  counterHeadY = nextCounterHeadY
+  moveSpeed = nextMoveSpeed
+  headVerticalStep = nextHeadVerticalStep
+}
+
+export const resetSnakeHeadLocation = (): void => {
+  setSnakeHeadLocationState({
+    counterHeadX: 0,
+    counterHeadY: 0,
+    moveSpeed: 1,
+    headVerticalStep: 0,
+  })
+  setDistanceFromSnakeToFood(2)
+}

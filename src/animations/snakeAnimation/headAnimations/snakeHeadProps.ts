@@ -20,3 +20,8 @@ export const getPositionHead = (): number[] => {
 export const getRotationHead = (): number[] => {
   return rotationHead
 }
+
+export const resetSnakeHeadProps = (): void => {
+  setPositionHead([0, 0, 0])
+  setRotationHead([0, 0, 0])
+}

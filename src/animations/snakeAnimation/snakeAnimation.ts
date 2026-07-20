@@ -58,6 +58,9 @@ export const snakeAnimation = (delta: number): void => {
 export const setSnakePreviousStepsArray = (props: PreviousStep[]): void => {
   snakePreviousStepsArray.splice(0, snakePreviousStepsArray.length, ...props)
 }
+export const resetSnakePreviousStepsArray = (): void => {
+  snakePreviousStepsArray.length = 0
+}
 /**
  * Возвращает текущий массив предыдущих шагов змейки
  * @returns readonly массив предыдущих шагов

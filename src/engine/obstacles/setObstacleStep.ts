@@ -59,4 +59,11 @@ export const resetCollidingPositionsCache = () => {
   cachedCollidingPositions = undefined
 }
 
+export const setCachedCollidingPositions = (positions: number[][]): void => {
+  cachedCollidingPositions = positions.map((position) => [...position])
+}
+
+export const getCachedCollidingPositions = (): number[][] | undefined =>
+  cachedCollidingPositions?.map((position) => [...position])
+
 export default setObstacleStep

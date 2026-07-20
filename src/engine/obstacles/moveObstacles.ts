@@ -26,6 +26,46 @@ export function getOscillatingStationaryY(): number[][] {
   return oscillatingStationaryY.map((coord) => [...coord])
 }
 
+export function getPreviousObstacleStepsX(): number[] {
+  return [...prevStepsX]
+}
+
+export function getPreviousObstacleStepsY(): number[] {
+  return [...prevStepsY]
+}
+
+export function setObstacleMovementHistory({
+  previousX,
+  previousY,
+  stationaryX,
+  stationaryY,
+}: {
+  previousX: number[]
+  previousY: number[]
+  stationaryX: number[][]
+  stationaryY: number[][]
+}): void {
+  prevStepsX.splice(0, prevStepsX.length, ...previousX)
+  prevStepsY.splice(0, prevStepsY.length, ...previousY)
+  oscillatingStationaryX.splice(
+    0,
+    oscillatingStationaryX.length,
+    ...stationaryX.map((coord) => [...coord])
+  )
+  oscillatingStationaryY.splice(
+    0,
+    oscillatingStationaryY.length,
+    ...stationaryY.map((coord) => [...coord])
+  )
+}
+
+export function resetObstacleMovementHistory(): void {
+  prevStepsX.length = 0
+  prevStepsY.length = 0
+  oscillatingStationaryX.length = 0
+  oscillatingStationaryY.length = 0
+}
+
 function isStoppedSnakeFrontCell(pos: number[]): boolean {
   const stoppedDirection = getStoppedSnakeDirection()
   if (!stoppedDirection) return false

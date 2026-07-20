@@ -17,6 +17,14 @@ export const setTailAnimatingQueue = (animationName: string) => {
   setIsTailAnimating(true)
 }
 
+export const setTailAnimatingQueueExact = (queue: AnimationStep[]) => {
+  tailAnimationQueue = queue.map((animation) => ({ ...animation }))
+}
+
+export const setTailAnimationCounter = (counter: number) => {
+  tailAnimationCounter = counter
+}
+
 export const getTailAnimatingQueue = () => {
   return tailAnimationQueue
 }
@@ -27,6 +35,12 @@ export const getTailAnimatingCounter = () => {
 
 export const getIsTailAnimating = () => {
   return isTailAnimating
+}
+
+export const resetTailAnimationState = () => {
+  tailAnimationQueue = []
+  tailAnimationCounter = 0
+  isTailAnimating = false
 }
 
 export const setTailAnimation = () => {

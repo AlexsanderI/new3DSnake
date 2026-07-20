@@ -42,3 +42,14 @@ export const snakeTongueMoving = (steps: SnakeSteps, delta: number) => {
 }
 
 export const getSnakeTongueProps = () => tongueProps
+
+export const resetSnakeTongueMoving = (): void => {
+  phase = 0
+  tongueProps.position.y = BASE_Y
+  tongueProps['rotation-y'] = 0
+  tongueProps.position = new Vector3(
+    tongueProps.position.x,
+    tongueProps.position.y,
+    tongueProps.position.z
+  )
+}

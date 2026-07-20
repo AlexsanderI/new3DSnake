@@ -6,7 +6,7 @@
 | # | Task | Layer | Owner | Estimate | Blocked by | FR | AC | Status |
 |---|---|---|---|---|---|---|---|---|
 | T1 | Add lifecycle controller foundation | app | Codex | M | - | FR-01, FR-02, FR-12, FR-13 | AC-01, AC-02, AC-03, AC-07, AC-17 | done |
-| T2 | Add best-score service and terminal snapshots | app | Codex | M | T1 | FR-03, FR-04, FR-05, FR-09, FR-10 | AC-04, AC-05, AC-06, AC-08, AC-18, AC-19, AC-20, AC-21 | todo |
+| T2 | Add best-score service and terminal snapshots | app | Codex | M | T1 | FR-03, FR-04, FR-05, FR-09, FR-10 | AC-04, AC-05, AC-06, AC-08, AC-18, AC-19, AC-20, AC-21 | done |
 | T3 | Add core session reset APIs | domain | Codex | M | T1 | FR-03, FR-14 | AC-01, AC-06, AC-12, AC-13, AC-14 | todo |
 | T4 | Add world-state reset APIs | domain | Codex | L | T1 | FR-14 | AC-01, AC-12, AC-13, AC-14, AC-24 | todo |
 | T5 | Add session temporary-effect cleanup | app | Codex | M | T1 | FR-12, FR-14 | AC-13, AC-14, AC-23, AC-24 | todo |

@@ -67,6 +67,9 @@ export const setNewMoveDirection = (move: string) => {
   newMoveDirection = move
 }
 export const getNewMoveDirection = (): string => newMoveDirection
+export const resetNewMoveDirection = (): void => {
+  setNewMoveDirection('')
+}
 
 /**
  * Изменяет направление движения змейки при нажатии клавиш со стрелками

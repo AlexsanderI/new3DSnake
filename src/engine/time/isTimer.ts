@@ -21,6 +21,9 @@ export function startTimer(): void {
 export function stopTimer(): void {
   isTimer = false;
 }
+export function resetTimerRunning(): void {
+  stopTimer();
+}
 /**
  * Возвращает значение isTimer
  * @returns isTimer

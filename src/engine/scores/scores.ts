@@ -15,6 +15,12 @@ let scores = 0
 export function setScores(score: number): void {
   scores += score
 }
+export function setScoresTotal(score: number): void {
+  scores = score
+}
+export function resetScores(): void {
+  setScoresTotal(0)
+}
 /**
  * Возвращает текущие баллы, набранные игроком при прохождении уровня
  * @returns scores

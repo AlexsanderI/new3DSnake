@@ -36,6 +36,9 @@ export function addEvent(newEvent: Event): void {
 export function setProtocol(currentProtocol: Protocol): void {
   protocol = [...currentProtocol]
 }
+export function clearProtocol(): void {
+  protocol = []
+}
 /**
  * Возвращает протокол
  * @returns protocol

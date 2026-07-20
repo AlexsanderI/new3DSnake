@@ -19,6 +19,12 @@ let isPause = false;
 export function checkPause(): boolean {
   return isPause;
 }
+export function setPause(nextPause: boolean): void {
+  isPause = nextPause;
+}
+export function resetPause(): void {
+  setPause(false);
+}
 /**
  * Изменяет boolean-значение "isPause" на противоположное
  */

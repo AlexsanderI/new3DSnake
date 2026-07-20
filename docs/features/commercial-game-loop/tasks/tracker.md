@@ -7,7 +7,7 @@
 |---|---|---|---|---|---|---|---|---|
 | T1 | Add lifecycle controller foundation | app | Codex | M | - | FR-01, FR-02, FR-12, FR-13 | AC-01, AC-02, AC-03, AC-07, AC-17 | done |
 | T2 | Add best-score service and terminal snapshots | app | Codex | M | T1 | FR-03, FR-04, FR-05, FR-09, FR-10 | AC-04, AC-05, AC-06, AC-08, AC-18, AC-19, AC-20, AC-21 | done |
-| T3 | Add core session reset APIs | domain | Codex | M | T1 | FR-03, FR-14 | AC-01, AC-06, AC-12, AC-13, AC-14 | todo |
+| T3 | Add core session reset APIs | domain | Codex | M | T1 | FR-03, FR-14 | AC-01, AC-06, AC-12, AC-13, AC-14 | done |
 | T4 | Add world-state reset APIs | domain | Codex | L | T1 | FR-14 | AC-01, AC-12, AC-13, AC-14, AC-24 | todo |
 | T5 | Add session temporary-effect cleanup | app | Codex | M | T1 | FR-12, FR-14 | AC-13, AC-14, AC-23, AC-24 | todo |
 | T6 | Coordinate session reset and session commands | app | Codex | L | T2, T3, T4, T5 | FR-01, FR-07, FR-08, FR-10, FR-11, FR-14 | AC-01, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-20 | todo |

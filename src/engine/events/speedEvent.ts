@@ -11,7 +11,14 @@ import { checkTimerWorking } from '../time/isTimer'
 /**
  * @var Хранит последнее направление движения змейки
  */
-let currentDirection: string | number
+let currentDirection: string | number = ''
+export const setCurrentDirection = (direction: string | number): void => {
+  currentDirection = direction
+}
+export const getCurrentDirection = (): string | number => currentDirection
+export const resetSpeedEventState = (): void => {
+  setCurrentDirection('')
+}
 /**
  * Создает событие изменения скорости на шаг нажатием стрелок по оси движения
  * @description

@@ -15,6 +15,9 @@ let currentLevel: number;
 export function setCurrentLevel(level: number): void {
   currentLevel = level;
 }
+export function resetCurrentLevel(): void {
+  setCurrentLevel(1);
+}
 /**
  * Возвращает текущий уровень игры
  * @returns currentLevel

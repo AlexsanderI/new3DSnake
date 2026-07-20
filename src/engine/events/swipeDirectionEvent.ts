@@ -2,6 +2,9 @@ import { getTouch } from './touchEvent'
 import { setNewMoveDirection } from './changeDirectionEvent'
 
 let newSwipeMove = ''
+export const setNewSwipeMove = (move: string): void => {
+  newSwipeMove = move
+}
 
 export const swipeDirectionEvent = (): string => {
   const xDiff = getTouch()[1].x - getTouch()[0].x
@@ -9,21 +12,21 @@ export const swipeDirectionEvent = (): string => {
   if (Math.abs(Math.abs(xDiff) - Math.abs(yDiff)) > 1) {
     if (Math.abs(xDiff) < Math.abs(yDiff)) {
       if (yDiff > 0) {
-        newSwipeMove = 'down'
+        setNewSwipeMove('down')
         setNewMoveDirection('down')
         return 'ArrowDown'
       } else if (yDiff < 0) {
-        newSwipeMove = 'up'
+        setNewSwipeMove('up')
         setNewMoveDirection('up')
         return 'ArrowUp'
       }
     } else {
       if (xDiff > 0) {
-        newSwipeMove = 'right'
+        setNewSwipeMove('right')
         setNewMoveDirection('right')
         return 'ArrowRight'
       } else if (xDiff < 0) {
-        newSwipeMove = 'left'
+        setNewSwipeMove('left')
         setNewMoveDirection('left')
         return 'ArrowLeft'
       }
@@ -34,3 +37,6 @@ export const swipeDirectionEvent = (): string => {
 }
 
 export const getNewSwipeMove = () => newSwipeMove
+export const resetSwipeDirection = (): void => {
+  setNewSwipeMove('')
+}

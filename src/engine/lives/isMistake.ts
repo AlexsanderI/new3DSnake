@@ -22,6 +22,9 @@ export function mistakeWasMade(): void {
 export function noMistakeWasMade(): void {
   isMistake = false;
 }
+export function resetMistake(): void {
+  noMistakeWasMade();
+}
 /**
  * Возвращает значение isMistake
  * @returns isMistake

@@ -15,6 +15,12 @@ let timer = 0
 export function setTimer(interval: number): void {
   timer += interval
 }
+export function setTimerElapsed(elapsed: number): void {
+  timer = elapsed
+}
+export function resetTimer(): void {
+  setTimerElapsed(0)
+}
 /**
  * Возвращает текущее время, затраченное игроком на прохождение уровня
  * @returns timer

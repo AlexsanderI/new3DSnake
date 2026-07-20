@@ -1,20 +1,17 @@
 import React, { memo } from 'react'
-import { useMenuStore, usePauseStore } from '../store/menuStore'
+import { useMenuStore } from '../store/menuStore'
 import '../styles/menu.css'
-import { swapPause } from '../engine/events/pauseEvent'
+import { resumeWithLifecycle } from '../engine/session/lifecycleInput'
 
 const Menu: React.FC = () => {
   const { toggleModal, titleMenu } = useMenuStore()
-  const { togglePause } = usePauseStore()
   return (
     <div
       className='menu-game'
       onClick={() => {
         if (titleMenu.indexOf('Game over') !== -1) location.reload()
         else if (titleMenu === 'Pause') {
-          togglePause()
-          swapPause()
-          toggleModal()
+          resumeWithLifecycle()
         } else toggleModal()
       }}
     >

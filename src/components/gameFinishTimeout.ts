@@ -2,6 +2,7 @@ import {
   registerSessionTimeout,
   type SessionEffectHandle,
 } from '../engine/session/sessionEffects'
+import type { LifecycleState } from '../engine/session/lifecycleController'
 
 export const SCENE_FINISH_DELAY_MS = 500
 
@@ -24,4 +25,15 @@ export function scheduleGameFinishTimeout(
     ref.current = null
     onFinish()
   }, SCENE_FINISH_DELAY_MS)
+}
+
+export function clearGameFinishTimeoutOnLifecycleReset(
+  ref: GameFinishTimeoutRef,
+  lifecycleState: LifecycleState,
+): void {
+  if (lifecycleState === 'active-gameplay' || lifecycleState === 'level-complete') {
+    return
+  }
+
+  clearGameFinishTimeout(ref)
 }

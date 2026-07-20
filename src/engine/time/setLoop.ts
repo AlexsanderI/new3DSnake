@@ -2,12 +2,7 @@
  *  @module setLoop.ts Управляет игровым циклом
  *     @function setLoop Рекурсивная функция, позволяющая менять скорость игры
  */
-import * as INTERRUPT from '../events/interruptGameEvent'
-import playLevel from '../levels/playLevel'
-// import render from "../render/render";
-import { checkTimerWorking } from './isTimer'
-import { setTimer } from './timer'
-import { getTimerStep } from './timerStepPerLevel'
+import { runLifecycleFrame } from '../session/lifecycleFrame'
 /**
  * Запускает setLoop() каждые timerStepPerLevel миллисекунд в котором:
  *  - проверяет условия прерывания игры
@@ -16,11 +11,7 @@ import { getTimerStep } from './timerStepPerLevel'
  *  - устанавливается актуальное значение интервала перерисовки игрового поля
  */
 function setLoop(delta: number) {
-  INTERRUPT.interruptGameEvent()
-  if (!INTERRUPT.getInterruptGame()) {
-    playLevel()
-  }
-  if (checkTimerWorking()) setTimer(delta * 1000)
+  runLifecycleFrame(delta)
 }
 
 export default setLoop

@@ -4,7 +4,7 @@
  */
 import * as RENDER from '../render/isRender'
 import { changeDirectionEvent } from './changeDirectionEvent'
-import { checkPause, keyboardPauseEvent } from './pauseEvent'
+import { checkPause } from './pauseEvent'
 import * as TIMER from '../time/isTimer'
 import speedEvent from './speedEvent'
 import { checkMistake } from '../lives/isMistake'
@@ -16,6 +16,9 @@ import { getProtocol } from '../protocol/protocol'
 import { getSnakeHeadParams } from '../snake/snake'
 import { getIsDistraintContact } from './allContactEvents'
 import noMoves from './noMovesEvent'
+import type { SessionCommands } from '../session/sessionCommands'
+import { productionSessionCommands } from '../session/productionSession'
+import { handleLifecycleKeyboardEvent } from '../session/lifecycleInput'
 
 const isArrowKey = (code: string): boolean => {
   return (
@@ -32,7 +35,7 @@ const isArrowKey = (code: string): boolean => {
  * @param e событие нажатия клавиши на клавиатуре
  * @returns прерывает выполнение функции, если нажата неиспользуемая клавиша
  */
-function keyboardEvents(e: KeyboardEvent) {
+export function processActiveKeyboardEvent(e: KeyboardEvent) {
   // if (getProtocol()[getProtocol().length - 1]?.name === 'life lost') {
   //   console.log(
   //     'life lost',
@@ -56,16 +59,26 @@ function keyboardEvents(e: KeyboardEvent) {
 
   const newDirection = changeDirectionEvent(e)
   const newSpeed = speedEvent(e)
-  const pause = keyboardPauseEvent(e)
 
   // findLastMoveDirection().name !== "" ? keyboardPauseEvent(e) : false;
-  if (!pause && newDirection.name !== '') TIMER.startTimer()
+  if (newDirection.name !== '') TIMER.startTimer()
   if ((newDirection.name === '' && newSpeed.name === '') || howMuchIsLeftToEat() === 0)
     return
   if ((TIMER.checkTimerWorking() || !checkMistake() || getTimer() === 0) && !checkPause())
     newDirection.name !== '' ? protocolExecutor(newDirection) : protocolExecutor(newSpeed)
 
   RENDER.renderNotComplete()
+}
+
+export function keyboardEventsForSession(
+  e: KeyboardEvent,
+  session: SessionCommands = productionSessionCommands,
+): boolean {
+  return handleLifecycleKeyboardEvent(e, session, processActiveKeyboardEvent)
+}
+
+function keyboardEvents(e: KeyboardEvent): boolean {
+  return keyboardEventsForSession(e)
 }
 
 export default keyboardEvents

@@ -4,36 +4,36 @@ import renderInfo from '../engine/render/renderInfo'
 import { useFrame } from '@react-three/fiber'
 import setLoop from '../engine/time/setLoop'
 import { useMenuStore } from '../store/menuStore'
-import keyboardEvents from '../engine/events/keyboardEvents'
-import { keyboardPauseEvent } from '../engine/events/pauseEvent'
 import { getInterruptGame } from '../engine/events/interruptGameEvent'
 import {
   clearGameFinishTimeout,
+  clearGameFinishTimeoutOnLifecycleReset,
   scheduleGameFinishTimeout,
   type GameFinishTimeoutRef,
 } from './gameFinishTimeout'
+import { useLifecycleState } from '../store/sessionLifecycleStore'
+import { productionSessionCommands } from '../engine/session/productionSession'
+import { registerLifecycleKeyboardListeners } from '../engine/session/lifecycleKeyboardListeners'
 
 export const Game = () => {
   const isVisible = useMenuStore((state) => state.isVisible)
-  const titleMenu = useMenuStore((state) => state.titleMenu)
+  const lifecycleState = useLifecycleState()
   const [showScene, setShowScene] = useState(true)
   const finishTimeoutRef = useRef<GameFinishTimeoutRef['current']>(null)
 
   useEffect(() => {
-    document.removeEventListener('keydown', keyboardEvents)
-    document.removeEventListener('keydown', keyboardPauseEvent)
-
-    if (isVisible && titleMenu === 'Pause') {
-      document.addEventListener('keydown', keyboardPauseEvent)
-    } else if (!isVisible) {
-      document.addEventListener('keydown', keyboardEvents)
+    if (!isVisible && lifecycleState === 'main-menu') {
+      productionSessionCommands.startSession()
     }
+  }, [isVisible, lifecycleState])
 
-    return () => {
-      document.removeEventListener('keydown', keyboardEvents)
-      document.removeEventListener('keydown', keyboardPauseEvent)
-    }
-  }, [isVisible, titleMenu])
+  useEffect(() => registerLifecycleKeyboardListeners(document, lifecycleState), [
+    lifecycleState,
+  ])
+
+  useEffect(() => {
+    clearGameFinishTimeoutOnLifecycleReset(finishTimeoutRef, lifecycleState)
+  }, [lifecycleState])
 
   useEffect(() => {
     return () => {

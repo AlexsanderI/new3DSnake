@@ -8,14 +8,18 @@
  *    @function getFoodCoord Возвращает координаты еды
  */
 import { Coordinate } from '../../types/obstacleTypes'
+import { resetAmountOfFood } from './amountOfFoodPerLevel'
+import { resetCurrentFoodNumber } from './currentFoodNumber'
+
+const INITIAL_FOOD_COORD: Coordinate = [0, 0]
 /**
  * @var Количество баллов, которые получает игрок за съеденый объект еды
  */
-let foodScores: number
+let foodScores = 0
 /**
  * @var Массив координат X и Y текущей еды
  */
-let foodCoord: Coordinate
+let foodCoord: Coordinate = [...INITIAL_FOOD_COORD]
 /**
  * Задает количество баллов, которые игрок получает за каждую съеденную еду
  * @param score
@@ -23,12 +27,18 @@ let foodCoord: Coordinate
 export function setFoodScores(score: number) {
   foodScores = score
 }
+export function resetFoodScores(): void {
+  foodScores = 0
+}
 /**
  * Задает координаты X и Y текущей еды
  * @param coord
  */
 export function setFoodCoord(coord: Coordinate) {
   foodCoord = [...coord]
+}
+export function resetFoodCoord(): void {
+  foodCoord = [...INITIAL_FOOD_COORD]
 }
 /**
  * Возвращает количество баллов, которые игрок получает за каждую съеденную еду
@@ -43,4 +53,10 @@ export function getFoodScores(): number {
  */
 export function getFoodCoord(): Coordinate {
   return foodCoord
+}
+export function resetFood(): void {
+  resetAmountOfFood()
+  resetCurrentFoodNumber()
+  resetFoodScores()
+  resetFoodCoord()
 }

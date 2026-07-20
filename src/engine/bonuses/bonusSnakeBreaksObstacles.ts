@@ -13,6 +13,9 @@ let isBreaksObstacles = false;
 export function setBreaksObstacles(breaksObstacles: boolean): void {
   isBreaksObstacles = breaksObstacles;
 }
+export function resetBreaksObstacles(): void {
+  isBreaksObstacles = false;
+}
 /**
  *  Возвращает состояние бонуса удаления препятствий - true(действует)/false(нет)
  * @returns состояние бонуса isBreaksObstacles

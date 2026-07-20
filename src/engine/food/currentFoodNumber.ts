@@ -10,7 +10,7 @@ import { getAmountOfFood } from "./amountOfFoodPerLevel";
 /**
  * @var порядковый номер отображаемой еды на текущем уровне
  */
-let currentFoodNumber: number;
+let currentFoodNumber = 0;
 /**
  * Вычисляет порядковый номер отображаемой еды на текущем уровне
  * @param currentLevel - текущий уровень игры
@@ -23,6 +23,12 @@ export function setCurrentFoodNumber(currentLevel: number): void {
   currentFoodNumber = getProtocol()
     .slice(currentLevelStart)
     .filter((notice) => notice.name === "set food").length;
+}
+export function setCurrentFoodNumberExact(foodNumber: number): void {
+  currentFoodNumber = foodNumber;
+}
+export function resetCurrentFoodNumber(): void {
+  currentFoodNumber = 0;
 }
 /**
  * Возвращает порядковый номер отображаемой еды на текущем уровне

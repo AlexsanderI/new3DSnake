@@ -10,11 +10,14 @@
 /**
  * @var Индекс текущего бонуса в массиве всех бонусов
  */
-let currentBonus: number;
+const INITIAL_CURRENT_BONUS = -1;
+const INITIAL_BONUS_COORD = [0, 0];
+
+let currentBonus = INITIAL_CURRENT_BONUS;
 /**
  * @var Массив координат X и Y текущего бонуса
  */
-let bonusCoord: number[];
+let bonusCoord: number[] = [...INITIAL_BONUS_COORD];
 /**
  * Задает индекс текущего бонуса в массиве всех бонусов
  * @param index номер текущего бонуса в массиве бонусов
@@ -23,6 +26,9 @@ let bonusCoord: number[];
 export function setCurrentBonus(index: number) {
   currentBonus = index;
 }
+export function resetCurrentBonus(): void {
+  currentBonus = INITIAL_CURRENT_BONUS;
+}
 /**
  * Задает координаты X и Y текущего бонуса
  * @param coord координаты текущего бонуса
@@ -30,6 +36,9 @@ export function setCurrentBonus(index: number) {
  */
 export function setBonusCoord(coord: number[]) {
   bonusCoord = [...coord];
+}
+export function resetBonusCoord(): void {
+  bonusCoord = [...INITIAL_BONUS_COORD];
 }
 /**
  * Возвращает индекс текущего бонуса в массиве всех бонусов
@@ -46,4 +55,8 @@ export function getCurrentBonus(): number {
  */
 export function getBonusCoord(): number[] {
   return bonusCoord;
+}
+export function resetBonus(): void {
+  resetCurrentBonus();
+  resetBonusCoord();
 }

@@ -21,6 +21,9 @@ export function bonusAddScores(): void {
 export function bonusAddScoresDeactivate(): void {
   addedScores = false;
 }
+export function resetBonusAddScores(): void {
+  addedScores = false;
+}
 /**
  *  Возвращает состояние бонуса добавления жизней
  * @returns true - жизни добавлены, false - нет

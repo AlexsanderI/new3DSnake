@@ -21,6 +21,10 @@ export function catchBonus(isCatch: boolean): void {
   bonusCatchingState.isBonusCaught = isCatch
   if (isCatch) bonusCatchingState.caughtFoodNumber = getCurrentFoodNumber()
 }
+export function resetBonusCatchingState(): void {
+  bonusCatchingState.isBonusCaught = false
+  bonusCatchingState.caughtFoodNumber = -1
+}
 /**
  * Возвращает параметры касания головой змейки бонуса из bonusCatchingState
  * @returns статус касания бонуса со змейкой

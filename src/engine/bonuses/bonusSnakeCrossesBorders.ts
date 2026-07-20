@@ -13,6 +13,9 @@ let isCrossesBorders = false;
 export function setCrossesBorders(crossesBorders: boolean): void {
   isCrossesBorders = crossesBorders;
 }
+export function resetCrossesBorders(): void {
+  isCrossesBorders = false;
+}
 /**
  Возвращает состояние бонуса пересечения границ - true(действует)/false(нет)
  * @returns состояние бонуса isCrossesBorders

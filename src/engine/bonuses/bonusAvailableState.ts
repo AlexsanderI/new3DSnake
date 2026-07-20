@@ -21,6 +21,9 @@ export function giveBonus(): void {
 export function removeBonus(): void {
   isBonusAvailable = false;
 }
+export function resetBonusAvailability(): void {
+  isBonusAvailable = false;
+}
 /**
  * Возвращает статус доступа игрока к бонусу
  * @returns true - доступ открыт, false - закрыт

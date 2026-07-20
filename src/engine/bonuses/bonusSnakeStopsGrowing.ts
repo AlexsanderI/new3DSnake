@@ -13,6 +13,9 @@ let isStopsGrowing = false;
 export function setStopsGrowing(stopsGrowing: boolean): void {
   isStopsGrowing = stopsGrowing;
 }
+export function resetStopsGrowing(): void {
+  isStopsGrowing = false;
+}
 /**
  Возвращает состояние бонуса остановки роста - true(действует)/false(нет)
  * @returns состояние бонуса isStopsGrowing

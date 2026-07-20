@@ -11,10 +11,17 @@
  *    @function getPreviousSnake Возвращает предыдущие координаты тела змейки
  */
 import * as SNAKE from '../../types/snakeTypes'
+
+const INITIAL_SNAKE_HEAD: SNAKE.SnakeHeadCoord = {
+  snakeHeadCoordX: 0,
+  snakeHeadCoordY: 0,
+  snakeHeadStepX: 0,
+  snakeHeadStepY: 0,
+}
 /**
  * @var объект с координатами головы змейки и шагами её перемещения по вертикали и горизонтали
  */
-let snakeHead: SNAKE.SnakeHeadCoord
+let snakeHead: SNAKE.SnakeHeadCoord = { ...INITIAL_SNAKE_HEAD }
 /**
  * @var массив с координатами головы и тела змейки
  */
@@ -31,6 +38,9 @@ let stoppedSnakeDirection: [number, number] | null = null
 export function setSnakeHeadParams(snake: SNAKE.SnakeHeadCoord): void {
   snakeHead = Object.assign({}, snake)
 }
+export function resetSnakeHead(): void {
+  snakeHead = { ...INITIAL_SNAKE_HEAD }
+}
 /**
  * Увеличивает тело змейки
  * @param link Звено, увеличивающее длину тела змейки
@@ -45,6 +55,10 @@ export function addSnakeBodyCoord(link: number[]): void {
 export function setSnakeBodyCoord(body: SNAKE.SnakeBodyCoord): void {
   previousSnakeBody = [...snakeBody]
   snakeBody = [...body]
+}
+export function resetSnakeBody(): void {
+  snakeBody = []
+  previousSnakeBody = []
 }
 /**
  * Возвращает параметры головы змейки
@@ -74,4 +88,9 @@ export function getSnakeBodyCoord(): SNAKE.SnakeBodyCoord {
  */
 export function getPreviousSnake(): SNAKE.SnakeBodyCoord {
   return previousSnakeBody
+}
+export function resetSnake(): void {
+  resetSnakeHead()
+  resetSnakeBody()
+  clearStoppedSnakeDirection()
 }

@@ -13,6 +13,9 @@ let isDoubleScoresFood = false;
 export function setDoubleScoresFood(isDouble: boolean): void {
   isDoubleScoresFood = isDouble;
 }
+export function resetDoubleScoresFood(): void {
+  isDoubleScoresFood = false;
+}
 /**
  *  Возвращает состояние бонуса удвоения очков еды - true(действует)/false(нет)
  * @returns состояние бонуса isDoubleScoresFood

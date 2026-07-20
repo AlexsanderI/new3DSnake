@@ -21,6 +21,9 @@ export function bonusAddTime(): void {
 export function bonusAddTimeDeactivate(): void {
   addedTime = false;
 }
+export function resetBonusAddTime(): void {
+  addedTime = false;
+}
 /**
  *  Возвращает состояние бонуса добавления времени
  * @returns true - время добавлено, false - нет

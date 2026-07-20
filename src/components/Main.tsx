@@ -58,6 +58,7 @@ import { Suspense, lazy } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { useMenuStore } from '../store/menuStore'
+import { useLifecycleState } from '../store/sessionLifecycleStore'
 import { cameraCONFIG } from '../config/cameraConfig'
 import '../styles/main.css'
 
@@ -137,6 +138,7 @@ const Scene = () => (
 
 function Main() {
   const isVisible = useMenuStore((s) => s.isVisible)
+  const lifecycleState = useLifecycleState()
   const { far, near, fov, zoom } = cameraCONFIG
 
   return (
@@ -163,7 +165,7 @@ function Main() {
             <Scene />
           </Canvas>
 
-          {isVisible && (
+          {(isVisible || lifecycleState === 'game-over') && (
             <Suspense fallback={<LoadingFallback text='Loading menu...' />}>
               <Menu />
             </Suspense>

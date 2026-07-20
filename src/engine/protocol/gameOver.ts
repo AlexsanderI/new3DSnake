@@ -2,26 +2,19 @@
  *  @module gameOver.ts Обрабатывает событие окончания игры
  *     @function gameOver Выполняет закрытие текущей игры и запуск новой
  */
-import { useMenuStore } from "../../store/menuStore";
-import { stopTimer } from "../time/isTimer";
-import { getProtocol } from "./protocol";
+import { useMenuStore } from '../../store/menuStore'
+import { reportGameOver } from '../session/gameOverReporter'
+import type { EngineFailureReason } from '../session/resultSnapshots'
 /**
  * Выводит сообщение, помещает протокол в хранилище и перезапускает игру
  * @param value параметр окончания игры: истекло время или кончились жизни
  */
 function gameOver(value: string): void {
-  const { isVisible, toggleModal, selectTitleMenu } = useMenuStore.getState();
-  stopTimer();
+  const reported = reportGameOver(value as EngineFailureReason)
+  if (!reported) return
 
-  let titleMenu = "";
-  if (value === "no moves") titleMenu = "No moves";
-  if (value === "time limit") titleMenu = "Time limit";
-
-  if (!isVisible) {
-    toggleModal();
-    selectTitleMenu(`Game over! ${titleMenu}! Press OK to replay...`);
-  }
-  localStorage.setItem("protocol", JSON.stringify(getProtocol()));
+  const { setModalVisible } = useMenuStore.getState()
+  setModalVisible(true)
 }
 
-export default gameOver;
+export default gameOver

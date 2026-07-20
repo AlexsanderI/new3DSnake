@@ -25,3 +25,60 @@
   cursor: pointer;
   text-align: center;
 }
+
+.menu-game__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  cursor: default;
+}
+
+.menu-game__result-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 0;
+  width: min(560px, 90vw);
+}
+
+.menu-game__result-list div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-game__result-list dt {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.menu-game__result-list dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.menu-game__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.menu-game__actions button {
+  min-width: 120px;
+  border: 1px solid #b8c6dc;
+  border-radius: 6px;
+  background: transparent;
+  color: #b8c6dc;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 16px;
+}
+
+.menu-game__actions button:focus-visible,
+.menu-game__actions button:hover {
+  background: #b8c6dc;
+  color: #293447;
+}

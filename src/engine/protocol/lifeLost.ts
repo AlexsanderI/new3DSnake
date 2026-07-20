@@ -7,6 +7,10 @@
 import { checkMistake, noMistakeWasMade } from '../lives/isMistake'
 import { setLives } from '../lives/lives'
 import getSelectors from '../render/getSelectors'
+import {
+  registerSessionInterval,
+  registerSessionTimeout,
+} from '../session/sessionEffects'
 import { stopTimer } from '../time/isTimer'
 /**
  *  Запускается при потере жизни игроком
@@ -22,18 +26,17 @@ function lifeLost(): void {
 
   if (checkMistake()) {
     setLives(-1)
-    const intervalID = setInterval(
+    const interval = registerSessionInterval(
       () => {
         attention = !attention
         // setSnakeOpacity(attention ? 0.4 : 1);
         if (lifeElement) lifeElement.style.opacity = `${attention ? 0.4 : 1}`
       },
-      300,
-      { once: true }
+      300
     )
 
-    setTimeout(() => {
-      clearInterval(intervalID)
+    registerSessionTimeout(() => {
+      interval.cleanup()
       // setSnakeOpacity(1);
     }, 5000)
 

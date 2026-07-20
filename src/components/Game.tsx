@@ -7,14 +7,17 @@ import { useMenuStore } from '../store/menuStore'
 import keyboardEvents from '../engine/events/keyboardEvents'
 import { keyboardPauseEvent } from '../engine/events/pauseEvent'
 import { getInterruptGame } from '../engine/events/interruptGameEvent'
-
-const SCENE_FINISH_DELAY_MS = 500
+import {
+  clearGameFinishTimeout,
+  scheduleGameFinishTimeout,
+  type GameFinishTimeoutRef,
+} from './gameFinishTimeout'
 
 export const Game = () => {
   const isVisible = useMenuStore((state) => state.isVisible)
   const titleMenu = useMenuStore((state) => state.titleMenu)
   const [showScene, setShowScene] = useState(true)
-  const finishTimeoutRef = useRef<number | null>(null)
+  const finishTimeoutRef = useRef<GameFinishTimeoutRef['current']>(null)
 
   useEffect(() => {
     document.removeEventListener('keydown', keyboardEvents)
@@ -34,9 +37,7 @@ export const Game = () => {
 
   useEffect(() => {
     return () => {
-      if (finishTimeoutRef.current !== null) {
-        window.clearTimeout(finishTimeoutRef.current)
-      }
+      clearGameFinishTimeout(finishTimeoutRef)
     }
   }, [])
 
@@ -45,9 +46,9 @@ export const Game = () => {
     renderInfo()
 
     if (getInterruptGame() && finishTimeoutRef.current === null) {
-      finishTimeoutRef.current = window.setTimeout(() => {
+      scheduleGameFinishTimeout(finishTimeoutRef, () => {
         setShowScene(false)
-      }, SCENE_FINISH_DELAY_MS)
+      })
     }
 
     if (!getInterruptGame() && !showScene) {

@@ -1,8 +1,10 @@
+import { useRef } from 'react'
 import type { GameOverSnapshot } from '../engine/session/resultSnapshots'
+import { useFocusPrimaryAction } from './useFocusPrimaryAction'
 
 export interface GameOverResultActions {
-  onPlayAgain: () => void
-  onMainMenu: () => void
+  onPlayAgain: () => boolean
+  onMainMenu: () => boolean
 }
 
 interface GameOverResultOverlayProps {
@@ -14,8 +16,16 @@ export function GameOverResultOverlay({
   snapshot,
   actions,
 }: GameOverResultOverlayProps) {
+  const primaryActionRef = useRef<HTMLButtonElement>(null)
+  useFocusPrimaryAction(primaryActionRef)
+
   return (
-    <div className='menu-game__result' role='dialog' aria-labelledby='game-over-title'>
+    <div
+      className='menu-game__result'
+      role='dialog'
+      aria-modal='true'
+      aria-labelledby='game-over-title'
+    >
       <h2 id='game-over-title'>Game Over</h2>
       <dl className='menu-game__result-list'>
         <div>
@@ -36,7 +46,7 @@ export function GameOverResultOverlay({
         </div>
       </dl>
       <div className='menu-game__actions'>
-        <button type='button' onClick={actions.onPlayAgain}>
+        <button type='button' ref={primaryActionRef} onClick={actions.onPlayAgain}>
           Play Again
         </button>
         <button type='button' onClick={actions.onMainMenu}>

@@ -6,30 +6,20 @@ import { useLifecycleState } from '../store/sessionLifecycleStore'
 import { productionSessionCommands } from '../engine/session/productionSession'
 import { GameOverResultOverlay } from './GameOverResultOverlay'
 import { VictoryResultOverlay } from './VictoryResultOverlay'
+import { createResultActions } from './resultActions'
 
 const Menu: React.FC = () => {
-  const { toggleModal, titleMenu, setModalVisible, selectTitleMenu } = useMenuStore()
+  const { toggleModal, titleMenu } = useMenuStore()
   const lifecycleState = useLifecycleState()
   const terminalSnapshot = productionSessionCommands.getTerminalSnapshot()
+  const resultActions = createResultActions()
 
   if (lifecycleState === 'game-over' && terminalSnapshot?.kind === 'game-over') {
     return (
       <div className='menu-game'>
         <GameOverResultOverlay
           snapshot={terminalSnapshot}
-          actions={{
-            onPlayAgain: () => {
-              if (productionSessionCommands.playAgain()) {
-                setModalVisible(false)
-              }
-            },
-            onMainMenu: () => {
-              if (productionSessionCommands.returnToMainMenu()) {
-                selectTitleMenu('start')
-                setModalVisible(true)
-              }
-            },
-          }}
+          actions={resultActions}
         />
       </div>
     )
@@ -40,19 +30,7 @@ const Menu: React.FC = () => {
       <div className='menu-game'>
         <VictoryResultOverlay
           snapshot={terminalSnapshot}
-          actions={{
-            onPlayAgain: () => {
-              if (productionSessionCommands.playAgain()) {
-                setModalVisible(false)
-              }
-            },
-            onMainMenu: () => {
-              if (productionSessionCommands.returnToMainMenu()) {
-                selectTitleMenu('start')
-                setModalVisible(true)
-              }
-            },
-          }}
+          actions={resultActions}
         />
       </div>
     )

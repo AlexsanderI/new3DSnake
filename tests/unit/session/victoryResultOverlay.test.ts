@@ -32,6 +32,9 @@ describe('VictoryResultOverlay', () => {
     )
 
     expect(html).toContain('Victory')
+    expect(html).toContain('role="dialog"')
+    expect(html).toContain('aria-modal="true"')
+    expect(html).toContain('aria-labelledby="victory-title"')
     expect(html).toContain('Final Score')
     expect(html).toContain('64')
     expect(html).toContain('Best Score')

@@ -33,6 +33,9 @@ describe('GameOverResultOverlay', () => {
     )
 
     expect(html).toContain('Game Over')
+    expect(html).toContain('role="dialog"')
+    expect(html).toContain('aria-modal="true"')
+    expect(html).toContain('aria-labelledby="game-over-title"')
     expect(html).toContain('Score')
     expect(html).toContain('42')
     expect(html).toContain('Best Score')

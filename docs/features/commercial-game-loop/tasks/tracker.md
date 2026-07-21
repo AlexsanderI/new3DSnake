@@ -25,6 +25,10 @@
 - T4A snake, food, and bonus reset APIs is complete.
 - T4B obstacles, animations, and render/HUD reset APIs is complete.
 
+## Regression Notes
+
+- BUG-01 fixed non-final level-transition world desynchronization after T10 review: the non-final level-complete path now clears level-local snake, food, obstacle, obstacle visual, and snake animation state before reusing the existing next-level initializer. T11 remains not started.
+
 ## Dependency Order
 
 T1 -> (T2, T3, T4, T5) -> T6 -> T7 -> (T8, T9) -> T10 -> T11 -> T12.

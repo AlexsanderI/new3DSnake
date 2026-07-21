@@ -12,6 +12,7 @@ import { getSnakeBodyCoord } from '../engine/snake/snake'
 import { getCurrentFoodNumber } from '../engine/food/currentFoodNumber'
 import Obstacles from './Obstacles'
 import Landscape from './Landscape'
+import { getCurrentLevel } from '../engine/levels/currentLevel'
 
 let counter = 0
 let currentFoodNumber = 0
@@ -23,6 +24,7 @@ export function Scene() {
   // })
 
   const { camera } = useThree()
+  const currentLevel = getCurrentLevel()
   const [x, y, z] = cameraCONFIG.position
   const [xx, yy, zz] = cameraCONFIG.rotation
   camera.rotation.set(xx, yy, zz)
@@ -58,8 +60,8 @@ export function Scene() {
   return (
     <>
       {/* performance && <Perf position='top-left' /> */}
-      <Obstacles />
-      <Snake />
+      <Obstacles key={`obstacles-${currentLevel}`} />
+      <Snake key={`snake-${currentLevel}`} />
       <Apple />
       <Field />
       <Landscape />

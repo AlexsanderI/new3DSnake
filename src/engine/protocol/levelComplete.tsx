@@ -12,6 +12,20 @@ import { getMaxScores } from '../scores/maxScoresPerLevel'
 import { setBonuses } from '../bonuses/bonusesPerLevel'
 import { useMenuStore } from '../../store/menuStore'
 import { reportVictory } from '../session/victoryReporter'
+import { resetSnakeAnimations } from '../../animations/snakeAnimation/resetSnakeAnimations'
+import { resetObstacleVisualState } from '../../components/obstacleVisualState'
+import { resetFood } from '../food/food'
+import { resetObstacles } from '../obstacles/resetObstacles'
+import { resetSnake } from '../snake/snake'
+
+function prepareWorldForNextLevel(): void {
+  resetSnake()
+  resetFood()
+  resetObstacles()
+  resetObstacleVisualState()
+  resetSnakeAnimations()
+}
+
 /**
  * Отрабатывает успешное завершение текущего уровня игры
  * @description
@@ -37,6 +51,7 @@ function levelComplete(): void {
         LEVEL.getCurrentLevel() - 1
       } is complete! Congratulation! Well done! It's time to Level ${LEVEL.getCurrentLevel()}`
     )
+    prepareWorldForNextLevel()
     setBonuses([])
     setLevelEvent(LEVEL.getCurrentLevel())
   }

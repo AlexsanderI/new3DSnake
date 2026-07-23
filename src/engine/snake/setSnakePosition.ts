@@ -39,3 +39,8 @@ export const setSnakePosition = (props: positionCounter): positionCounter => {
 
   return { counterX, counterY }
 }
+
+export const resetSnakePositionState = (): void => {
+  counter = 0
+  moveSpeed = 1
+}

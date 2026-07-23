@@ -11,6 +11,7 @@ import { resetSnakePreviousStepsArray } from './snakeAnimation'
 import { resetSnakeSpeed } from './snakeSpeedSetting'
 import { resetSnakeTurnAround } from './snakeStepSetting'
 import { resetTailAnimationState } from './tailAnimations/snakeTailAnimationSet'
+import { resetSnakePositionState } from '../../engine/snake/setSnakePosition'
 
 export function resetSnakeAnimations(): void {
   resetSnakePreviousStepsArray()
@@ -26,4 +27,5 @@ export function resetSnakeAnimations(): void {
   resetSnakeDiff()
   resetSnakeBodyProps()
   resetTailAnimationState()
+  resetSnakePositionState()
 }

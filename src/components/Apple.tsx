@@ -38,10 +38,7 @@ const Apple: React.FC = () => {
   }
 
   const [loadError, setLoadError] = React.useState<Error | null>(null)
-  const gltf = useGLTF('/apple.glb', undefined, undefined, (error) => {
-    console.error('Ошибка загрузки модели яблока:', error)
-    setLoadError(new Error('Не удалось загрузить модель яблока'))
-  }) as GLTFResult
+  const gltf = useGLTF('/apple.glb') as GLTFResult
   const { zLocation, scale, FRAME_SKIP } = appleCONFIG as AppleConfig
   const { position, updatePosition } = useApplePosition(zLocation)
   const [renderPosition, setRenderPosition] = React.useState<typeof position>(null)
@@ -153,10 +150,6 @@ const Apple: React.FC = () => {
       }
     }
   }, [position, scale])
-
-  React.useEffect(() => {
-    return () => useGLTF.clear('/apple.glb')
-  }, [])
 
   // 🟥 Если произошла реальная ошибка — показываем её
   if (loadError) {
